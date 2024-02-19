@@ -1,0 +1,56 @@
+def convertidor(numero):
+    unidades = ["", "uno ", "dos ", "tres ", "cuatro ", "cinco ", "seis ", "siete ", "ocho ", "nueve "]
+    decenas = ["", "diez ", "veinte ", "treinta ", "cuarenta ", "cincuenta ", "sesenta ", "setenta ", "ochenta ", "noventa "]
+    centenas = ["", "ciento", "docientos ", "trescientos ", "cuatrocientos ", "quinientos ", "seicientos ", "setecientos ", "ochocientos ", "novecientos "]
+    
+    miles = ["", "mil ", "millones ", "billon ", "billones ", "trillones "]
+
+    resultado = ""
+
+    if numero == 0:
+        return "cero"
+
+    iniciomiles = 0
+    while numero > 0:
+        bloque = numero % 1000
+        if bloque != 0:
+            resultado = convertidorbloque (bloque) + miles[iniciomiles] + resultado
+        iniciomiles += 1
+        numero //= 1000
+
+    return resultado.strip()
+
+def convertidorbloque(bloque):
+    unidades = ["", "uno ", "dos ", "tres ", "cuatro ", "cinco ", "seis ", "siete ", "ocho ", "nueve "]
+    decenas = ["", "diez ", "veinte ", "treinta ", "cuarenta ", "cincuenta ", "sesenta ", "setenta ", "ochenta ", "noventa "]
+    centenas = ["", "ciento", "docientos ", "trescientos ", "cuatrocientos ", "quinientos ", "seicientos ", "setecientos ", "ochocientos ", "novecientos "]
+
+    resultado = ""
+
+    centena = bloque // 100
+    if centena > 0:
+        resultado += centenas[centena]
+        bloque %= 100
+
+    decena = bloque // 10
+    unidad = bloque % 10
+
+    if decena > 0:
+        if decena == 1:
+            if unidad > 0:
+                resultado += "dieci" + unidades[unidad]
+            else:
+                resultado += "diez "
+        else:
+            resultado += decenas[decena]
+            if unidad > 0:
+                resultado += "y " + unidades[unidad]
+    else:
+        if unidad > 0:
+            resultado += unidades[unidad]
+
+    return resultado
+
+numero = int(input("Ingrese un numero: "))
+resultado = convertidor(numero)
+print(f"{resultado}")
